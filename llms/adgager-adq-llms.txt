@@ -1,0 +1,135 @@
+# AdQ
+
+> With AdQ, measuring and optimizing the real impact of your ad campaigns is now much easier. We automatically measure your ads across traditional and digital channels. By creating a unique ADQ score for brands, we clearly reveal your advertising performance.
+
+## Quick links
+
+- [AdQ](https://dash.adgager.com/en/adq)
+- [Request a Demo](https://dash.adgager.com/en/adq)
+- [Register / Login](https://dash.adgager.com/en/adq)
+- [Contact](mailto:adq@adgager.com)
+
+---
+
+## 1. Product profile
+
+- **Product name**: AdQ (written variant: ADQ)
+- **Provider**: Adgager
+- **URL**: https://dash.adgager.com/en/adq
+- **Contact**: adq@adgager.com
+- **Slogan**: "A Unique Reference in the Advertising World"
+- **Language**: English
+
+## 2. What is AdQ?
+
+Page introduction:
+
+> "With AdQ, measuring and optimizing the real impact of your ad campaigns is now much easier."
+
+Subheadings under this text:
+
+- **Ad Film Reviews**
+- **Now meet AdQ**
+
+Main description:
+
+> "We automatically measure your ads across traditional and digital channels. By creating a unique ADQ score for brands, we clearly reveal your advertising performance."
+
+## 3. Four product value propositions
+
+The page explains what AdQ does through four blocks:
+
+### Measure Advertising Impact
+"Track how your ad films affect your target audience through real user evaluations."
+
+### Compare Against Competitors
+"Compare your brand performance with category, competitor, and market averages on one screen."
+
+### Follow the Trends
+"Regularly monitor the ads that are most liked, most attention-grabbing, and strongest at creating purchase intent."
+
+### Reach Reports Faster
+"Share campaign results, score distributions, and executive summaries through practical reports."
+
+## 4. How is the AdQ score calculated?
+
+The page asks this as a heading and answers it in three sections:
+
+### The Right Questions
+"A custom question set is created specifically for advertisements. These questions help us analyze campaign effectiveness. Gager evaluations on criteria such as brand-celebrity fit, liking, and brand loyalty form the basis of this set."
+
+### The Right Measurement
+"Evaluations scored by Gagers from 1 to 10 are critical for measuring ad campaign success. These scores are combined to reflect each ad’s performance uniquely and averaged to produce a distinctive AdQ score."
+
+### The Right Result
+"This special AdQ score, used to measure the effectiveness of your ad campaigns, is generated from answers to the selected questions. It reflects each campaign’s performance in a more detailed and distinctive way. The AdQ score also lets you compare your campaigns with competitors. Comparison results help you better understand your position and strength in the market, optimize your strategies, and stay one step ahead. The AdQ score helps you understand, evaluate, and compare the impact of your campaigns more deeply. Once you understand your campaign strengths and weaknesses, you gain the opportunity to optimize your strategies more effectively."
+
+## 5. Adgager store reviews
+
+The page includes an "Adgager store reviews" widget. Intro text:
+
+> "Read your advertising performance more clearly with real user feedback."
+
+The widget displays a 5-star (★★★★★) icon; the page does not include a numeric rating value or review count.
+
+## 6. Plan categories
+
+AdQ offers two main plan categories:
+
+1. **Subscription Plan** — "Designed for businesses and marketers who want to regularly monitor campaign performance and run more detailed analyses. If you want to track the effectiveness of your advertising campaigns more closely, our annual subscription plan can help."
+2. **Report Plan**
+
+## 7. Subscription Plan — features
+
+- **ALL IN ONE**
+- **BRAND ADQ REPORT** — "Choose this plan to monitor and analyze advertising measurement for a general brand. You can access comprehensive reports and data to identify campaign successes and improvement opportunities."
+- **SUB-BRAND ADQ REPORT** — "Choose this plan to examine the advertising performance of a specific sub-brand under your main brand in detail. For example, you can use it to analyze ads for an ice cream brand under a main brand."
+- **SUBCATEGORY AVG.** — "Choose this plan to evaluate the average performance of ads within a specific subcategory. For example, you can use it to analyze ads for chocolate products within fast-moving consumer goods."
+- **MAIN CATEGORY AVG.** — "Choose this plan to track the overall performance of ad campaigns at main category level. You can observe the average scoring for ads in a main category such as FMCG."
+- **TURKEY AVG.** — "Use this plan to review general ADQ measurement averages for all ads aired in Turkey within specific date ranges. It is useful for understanding advertising trends in Turkey and measuring competition."
+- **TRENDS** — "Review the most popular and effective advertising campaigns and brands, and draw inspiration from these trends. For example, you can discover highlighted ad categories such as "Most Trusted Ad"."
+- **COMPETITOR AD FILM REPORT** — "Choose this plan to examine competitor brands' ad campaigns in detail and improve your own strategy. For example, you can analyze ads from another platform competing with a food delivery platform."
+- **COMPETITOR COMPARISON REPORT** — "Choose this plan to compare your own ad campaigns with competitor brand campaigns and identify your competitive advantage. For example, you can compare the ad campaigns of two food delivery platforms."
+- **UNLIMITED COMPARISON** — "Gain the broadest measurement and analysis capability by comparing all brands and ads without limits. It is useful for evaluating the market overall."
+- **UPLOAD VIDEO FOR MEASUREMENT** — "Choose this plan to access video upload capabilities so you can easily measure and report your own ad films. It is important for personalizing advertising measurements." (Plan column values: 1 / 3 / 3 / 5 / 10)
+- **ACCOUNT MANAGER** — "Choose this plan to add and manage multiple users in your account. It makes team collaboration easier." (Plan column values: 1 / 3 / 3 / 5 / 8)
+- **MONTHLY ADQ EXECUTIVE SUMMARY** — "Use this plan to access important insights for shaping your business plan and strategy. Monthly summary reports help you optimize your campaigns."
+
+## 8. Pricing
+
+Plan Selection — monthly price options:
+
+- 10.000 USD / Month
+- 20.000 USD / Month
+- 30.000 USD / Month
+- 40.000 USD / Month
+- 50.000 USD / Month
+
+## 9. Customer base
+
+> "50+ International Companies and 300+ Brands — Together with the world’s leading brands, we shape the insights of the future and deliver a unique market research experience for them."
+
+## 10. Closing CTA
+
+> "Explore the AdQ experience with your team."
+
+The page offers a **Request a Demo** button and privacy notice acceptance below this message.
+
+## 11. Site navigation and actions
+
+- Top navigation: **Features · Packages · Contact**
+- Account actions: **Login · Register · Forgot Password**
+- Language switcher: **TR · EN**
+- CTA: **Request a Demo**
+
+## 12. Contact
+
+- **Email**: adq@adgager.com
+- **Request a Demo**: https://dash.adgager.com/en/adq
+- **Register / Login**: https://dash.adgager.com/en/adq
+
+## 13. Legal pages
+
+- [Privacy Notice](https://www.adgager.com/aydinlatma-metni/)
+- [Terms of Use](https://www.adgager.com/kullanim-kosullari/)
+- [Privacy Policy](https://www.adgager.com/gizlilik-politikasi/)

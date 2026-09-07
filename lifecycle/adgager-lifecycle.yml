@@ -1,0 +1,83 @@
+generated: '2026-09-07'
+method: searched
+source: >-
+  https://www.adgager.com/sitemap_index.xml, https://www.adgager.com/llms.txt,
+  https://dash.adgager.com/adq/llms.txt, https://api.adgager.com/graphql (introspection)
+note: >-
+  Searched the provider's whole published surface - sitemap (36 pages), both site llms.txt files,
+  the AdQ product llms.txt, the blog, and probes of status./trust. subdomains. Every lifecycle
+  commitment below is absent. Recorded as measured absence, not as a gap in this run.
+api: adgager-graphql
+versioning:
+  scheme: none
+  versioned_endpoint: false
+  current_version: null
+  evidence: >-
+    A single unversioned https://api.adgager.com/graphql. No version path segment, no Accept-version
+    or API-Version header returned on any probe, and no version constant in the schema.
+deprecation:
+  policy_published: false
+  sunset_header: not observed
+  deprecation_header: not observed
+  rfc8594: false
+  deprecated_operations: []
+  evidence: >-
+    Zero of the schema's 1,100+ fields carry the GraphQL @deprecated directive. GraphQL's own
+    deprecation mechanism is available to this provider and is entirely unused, so a consumer has
+    no in-band signal that any field is going away.
+status_page:
+  published: false
+  url: null
+  evidence:
+  - url: https://status.adgager.com/
+    status: 0
+    detail: does not resolve (no DNS record)
+  - url: https://adgager.statuspage.io/
+    status: 200
+    detail: >-
+      resolves but 302s to https://www.atlassian.com/software/statuspage - the Statuspage marketing
+      page, i.e. no tenant of that name exists
+sla:
+  published: false
+  uptime_commitment: null
+  support_response_commitment: null
+changelog:
+  published: false
+  url: null
+  evidence: >-
+    No /changelog, /releases or /whats-new page in the sitemap; the blog at blog.adgager.com is
+    consumer-research editorial, not release notes.
+roadmap:
+  published: false
+maintenance_windows:
+  published: false
+support:
+  channels:
+  - type: email
+    value: hello@adgager.com
+    source: https://www.adgager.com/llms.txt
+  - type: email
+    value: adq@adgager.com
+    source: https://dash.adgager.com/adq/llms.txt
+  - type: phone
+    value: '+90 (216) 296 01 32'
+    source: https://www.adgager.com/llms.txt
+  - type: form
+    value: https://www.adgager.com/en/contact/
+  developer_support_channel: none (no developer portal, forum, Slack, Discord or issue tracker)
+company_milestones:
+  method: searched
+  source: https://www.adgager.com/llms.txt
+  entries:
+  - year: 2016
+    event: Founded with support from Istanbul Technical University (ITU).
+  - year: 2017
+    event: Began serving leading Turkish brands.
+  - year: 2019
+    event: Listed among Turkey's top 100 startups.
+  - year: 2021
+    event: 420% growth.
+  - year: 2022
+    event: 200% growth.
+  - year: 2023
+    event: Raised investment at a USD 6.6M valuation; renewed the technology stack.

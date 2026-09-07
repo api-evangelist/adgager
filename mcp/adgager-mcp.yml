@@ -1,0 +1,116 @@
+generated: '2026-09-07'
+method: derived
+source: graphql/adgager.graphql
+status: candidate
+note: >-
+  Adgager ships NO MCP server. This is a derived candidate tool list only - it describes what an MCP
+  server over the existing GraphQL API could expose, so the surface is recorded rather than dropped.
+  It is pointed at from apis.yml as `X-MCPServerCandidate`, never as `MCPServer`, because a
+  MCPServer pointer would assert the provider serves an agent endpoint and the provider does not.
+api: adgager-graphql
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: derived
+search_evidence:
+- probe: https://api.adgager.com/mcp
+  status: 404
+- probe: https://api.adgager.com/.well-known/agent-card.json
+  status: 404
+- probe: https://dash.adgager.com/.well-known/agent-card.json
+  status: 200
+  note: HTML SPA shell, not an agent card - the host answers 200 for every /.well-known/* path.
+- probe: npm registry search "adgager"
+  status: 200
+  result: 0 packages
+- probe: https://github.com/adgager
+  status: 404
+  result: no GitHub organisation or user of this name
+candidate_tools:
+- name: list_plans
+  graphql: 'query plans'
+  auth: none
+  read_only: true
+  description: List the AdQ subscription and report plans with monthly and yearly prices.
+- name: list_reference_data
+  graphql: 'query countries, cities, districts, regions, sectors, positions, universities, faculties, languages'
+  auth: none
+  read_only: true
+  description: Retrieve the platform reference vocabularies used to build target filters.
+- name: list_projects
+  graphql: 'query getProjects(first, page, where, orderBy, is_adq, filter)'
+  auth: sanctum-bearer
+  read_only: true
+  description: Page through research projects for the caller's brand, filtered and ordered.
+- name: get_project
+  graphql: 'query project(id)'
+  auth: sanctum-bearer
+  read_only: true
+- name: estimate_project_cost
+  graphql: 'query projectCost, projectTotal, projectGagerCount'
+  auth: sanctum-bearer
+  read_only: true
+  description: Price and size a study before creating it - the closest thing this API has to a dry run.
+- name: create_or_update_project
+  graphql: 'mutation upsertProject'
+  auth: sanctum-bearer
+  read_only: false
+  consequence: creates or mutates a paid research study
+- name: confirm_project
+  graphql: 'mutation confirmProject'
+  auth: sanctum-bearer
+  read_only: false
+  consequence: commits the study to field; spends brand credit
+- name: close_project
+  graphql: 'mutation closeProject(id, status)'
+  auth: sanctum-bearer
+  read_only: false
+- name: get_adq_dashboard
+  graphql: 'query adQBrandDashboard, projectScores, comparison, comparisons'
+  auth: sanctum-bearer
+  read_only: true
+  description: Read AdQ scores and competitor comparisons for a brand.
+- name: get_trends
+  graphql: 'query getTrends, getTrendsByQuestion, getTrendsByMonthYear'
+  auth: sanctum-bearer
+  read_only: true
+- name: get_insights
+  graphql: 'query getInsights, projectAnswers, projectsForReport'
+  auth: sanctum-bearer
+  read_only: true
+- name: manage_target_groups
+  graphql: 'mutation createTargetGroup, addTargetGroupFromFile, addTargetGroupFromList, mergeTargetGroups, deleteTargetGroup'
+  auth: sanctum-bearer
+  read_only: false
+  consequence: mergeTargetGroups is destructive and has no unmerge path
+- name: manage_question_groups
+  graphql: 'mutation upsertQuestionGroup, upsertGagerQuestion, upsertGagerQuestionOption, deleteQuestion, deleteOption'
+  auth: sanctum-bearer
+  read_only: false
+- name: list_brands
+  graphql: 'query brands(first, page, filter, orderBy), brand(id), brandsOfTheBrand, getBrands'
+  auth: sanctum-bearer
+  read_only: true
+- name: manage_brand_credit
+  graphql: 'query brandCredits, brandCreditList; mutation createBrandCredit, spendBrandCredit'
+  auth: sanctum-bearer
+  read_only: false
+  consequence: moves money-equivalent platform credit; no reversal mutation exists
+excluded_from_candidate_surface:
+  reason: >-
+    The following areas were deliberately left out of the candidate tool list because they are
+    member-side, identity-bearing or irreversible, and exposing them to an agent would be
+    inappropriate regardless of what the schema permits.
+  areas:
+  - Gager member PII (users, gagers, checkTcknVni, gagerBankInformations, InfoUpdate)
+  - wallet and payout (createGagerPaymentRequest, confirPaymentRequests, createGagTranscation, gentryRewardPayment)
+  - impersonation and permissions (impersonate, managePermission, updateUserRole)
+  - account deletion (deleteSelf)
+  - messaging (pushMessageByUserId, replyByMessageId)
+coverage:
+  graphql_queries_total: 118
+  graphql_mutations_total: 141
+  candidate_tools: 15

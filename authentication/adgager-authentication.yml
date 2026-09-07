@@ -1,0 +1,68 @@
+generated: '2026-09-07'
+method: probed
+source: https://api.adgager.com/graphql
+docs: null
+note: >-
+  Adgager publishes no developer documentation, so this profile is read from the live GraphQL
+  endpoint itself rather than from an auth page. derive-authentication.py was not usable here
+  because it reads OpenAPI securitySchemes and this provider ships GraphQL, not OpenAPI.
+api: adgager-graphql
+endpoint: https://api.adgager.com/graphql
+transport: GraphQL over HTTP POST (Laravel Lighthouse)
+schemes:
+- id: sanctum-bearer
+  type: http
+  scheme: bearer
+  in: header
+  header: Authorization
+  format: Bearer <token>
+  evidence: >-
+    An unauthenticated POST of `{me{id}}` returns
+    {"errors":[{"message":"Unauthenticated.","extensions":{"guards":["sanctum"]}}]}.
+    The `guards: ["sanctum"]` extension names Laravel Sanctum, whose HTTP guard reads a
+    personal-access token from the Authorization: Bearer header.
+  observed: '2026-09-07'
+- id: none-anonymous
+  type: none
+  evidence: >-
+    Reference-data queries answer with data and no credential. Verified anonymously on
+    2026-09-07: countries (249 rows), cities, plans (8 rows), languages (2 rows).
+  applies_to:
+  - countries
+  - cities
+  - districts
+  - regions
+  - plans
+  - languages
+  - sectors
+  - positions
+  - universities
+  - faculties
+credential_issuance:
+  self_service: false
+  mechanism: >-
+    Tokens are minted by the platform's own login flow, not by a developer key page. The schema
+    exposes login, socialLogin, register, registerWithRefer, passwordResetRequest and checkAuth
+    mutations, and LoginResponse is the token-bearing type. There is no public API-key console,
+    no documented client-credentials flow, and no published developer program.
+  human_entry_point: https://dash.adgager.com/login
+oauth2: false
+openid_connect: false
+mtls: false
+api_keys: false
+scopes:
+  present: false
+  note: >-
+    No OAuth 2.0 flow and no scope surface. Authorization is role-based inside the platform - the
+    schema carries managePermission, updateUserRole, PermissionResponse and an impersonate mutation
+    - but no scope vocabulary is exposed to a client, so no scopes/ artifact is written.
+discovery:
+  openid_configuration: not served (404 on every host - see well-known/adgager-well-known.yml)
+  oauth_authorization_server: not served (404 on every host)
+  oauth_protected_resource: not served (404 on every host)
+introspection:
+  graphql_introspection_enabled: true
+  authenticated: false
+  note: >-
+    Full GraphQL introspection is open to anonymous callers. That is what made this profile
+    possible; it is recorded as an observation, not as a recommendation.

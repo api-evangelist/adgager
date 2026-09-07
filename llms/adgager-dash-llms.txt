@@ -1,0 +1,19 @@
+# AdQ — Adgager
+
+> AdQ ile reklam kampanyalarınızın gerçek etkisini ölçmek ve optimize etmek artık çok daha kolay. Geleneksel ve dijital kanallarda reklamlarınızı otomatik olarak ölçümlendiriyoruz. Markalar için eşsiz bir ADQ skoru oluşturarak reklam performansınızı net bir şekilde gözler önüne seriyoruz.
+
+> With AdQ, measuring and optimizing the real impact of your ad campaigns is now much easier. We automatically measure your ads across traditional and digital channels. By creating a unique ADQ score for brands, we clearly reveal your advertising performance.
+
+## AdQ ürün sayfaları / AdQ product pages
+
+- **Türkçe**: https://dash.adgager.com/adq · agent summary: https://dash.adgager.com/adq/llms.txt
+- **English**: https://dash.adgager.com/en/adq · agent summary: https://dash.adgager.com/en/adq/llms.txt
+
+## İletişim / Contact
+
+- E-posta / Email: adq@adgager.com
+- Demo: https://dash.adgager.com/adq
+
+## Sağlayıcı / Provider
+
+Adgager

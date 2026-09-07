@@ -1,0 +1,97 @@
+generated: '2026-09-07'
+method: probed
+source: https://api.adgager.com/graphql
+note: >-
+  Adgager publishes no error reference. Every entry below is an error envelope actually observed
+  against the public endpoint on 2026-09-07, or a Lighthouse/Laravel error class the schema itself
+  names. Nothing is inferred from documentation, because none exists.
+api: adgager-graphql
+format: graphql-errors
+rfc9457: false
+problem_json: false
+envelope:
+  http_status: 200
+  shape: '{ "errors": [ { message, locations[], path[], extensions{} } ], "data": <partial or null> }'
+  partial_data: >-
+    Field-level failures null the failing field and still return the rest of the selection set -
+    `{me{id}}` unauthenticated returns errors[] alongside "data": {"me": null}.
+  extensions_fields:
+  - name: guards
+    meaning: names the Laravel auth guard that rejected the request (observed value ["sanctum"])
+  - name: file
+    meaning: absolute server-side source path of the throwing class
+  - name: line
+    meaning: source line number
+  - name: trace
+    meaning: full PHP stack trace (41 frames observed)
+  debug_extensions_exposed: true
+  debug_note: >-
+    The public endpoint returns file/line/trace debug extensions to anonymous callers. Recorded as
+    observed behaviour on 2026-09-07. Practical consequence for a consumer: error payloads are large
+    and unstable, and the machine-usable part of an error is `message` plus `extensions.guards` only.
+problem_types:
+- id: unauthenticated
+  message: Unauthenticated.
+  class: Nuwave\Lighthouse\Exceptions\AuthenticationException
+  extensions:
+    guards:
+    - sanctum
+  cause: A field behind the Sanctum guard was requested without a valid Bearer token.
+  remediation: "Obtain a token through the login or socialLogin mutation and send it as an Authorization: Bearer <token> header."
+  observed: '2026-09-07'
+  evidence: 'POST {me{id}} with no Authorization header'
+- id: field-not-on-type
+  message: 'Cannot query field "<field>" on type "<Type>".'
+  class: GraphQL\Validator\Rules\FieldsOnCorrectType
+  cause: The selection set names a field the schema does not define.
+  remediation: >-
+    Validate the document against graphql/adgager.graphql before sending. The server returns a
+    "Did you mean ..." suggestion for near-misses.
+  observed: '2026-09-07'
+  evidence: 'POST {foo} and POST {plans{nope}}'
+- id: unknown-argument
+  message: 'Unknown argument "<arg>" on field "<field>" of type "<Type>".'
+  class: GraphQL\Validator\Rules\KnownArgumentNames
+  cause: An argument was supplied that the field does not accept.
+  remediation: Check the field signature in the SDL; most mutations take a single `input:` object rather than positional arguments.
+  observed: '2026-09-07'
+  evidence: 'POST mutation{login(email:..., password:...)} - login actually takes input: LoginInput!'
+- id: missing-required-argument
+  message: 'Field "<field>" argument "<arg>" of type "<Type>!" is required but not provided.'
+  class: GraphQL\Validator\Rules\ProvidedRequiredArguments
+  cause: A non-null argument was omitted.
+  remediation: >-
+    Supply every non-null argument; note that `first` (Int!) is required on all paginated fields.
+  observed: '2026-09-07'
+- id: missing-query-parameter
+  message: >-
+    GraphQL Request must include at least one of those two parameters: "query" or "queryId"
+  class: GraphQL\Server\Helper
+  cause: The request carried no GraphQL document (for example a bare GET on /graphql).
+  remediation: POST a JSON body with a `query` member.
+  observed: '2026-09-07'
+  evidence: GET https://api.adgager.com/graphql
+- id: validation
+  message: Validation failed for the field [<field>].
+  class: Nuwave\Lighthouse\Exceptions\ValidationException
+  cause: >-
+    Input failed the server-side validation rules. Declared in the schema surface rather than
+    observed: the API exposes a `GenericResponse { status, message }` type and typed *Response
+    objects (LoginResponse, RegisterResponse, PasswordResetRequestResponse, CheckAuthResponse,
+    EmailVerificationResponse, GenericResponse) that carry business-level outcomes in `data`
+    rather than in `errors`.
+  remediation: Read the message and the typed response object; there is no machine-readable field-error code registry.
+  observed: null
+business_outcome_channel:
+  note: >-
+    A significant share of failure conditions on this API are NOT returned as GraphQL errors. They
+    come back as data on typed response objects - GenericResponse{status,message},
+    JoinCampaignResponse, DeactiveCampaignResponse, BlockUserResponse, JoinBigPrizeResponse,
+    CheckBigPrizeStatusResponse, confirPaymentRequestsResponse, gentryRewardPayResponse,
+    createGagerPaymentRequestResponse. A client must branch on those payloads as well as on errors[].
+error_code_registry:
+  published: false
+  note: >-
+    There is no numeric or string error-code vocabulary. Errors are identified only by their English
+    message text and their PHP exception class path, both of which are framework-internal and can
+    change without notice.

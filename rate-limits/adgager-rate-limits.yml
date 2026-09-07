@@ -1,0 +1,54 @@
+generated: '2026-09-07'
+method: probed
+source: https://api.adgager.com/
+docs: null
+note: >-
+  Adgager publishes no rate-limit documentation. The values below were read from live response
+  headers on an unauthenticated request on 2026-09-07, not from a docs page.
+api: adgager-graphql
+limit_count: 1
+published: false
+limits:
+- id: api-root-throttle
+  scope: per-caller (Laravel throttle middleware; the keying is not disclosed by the headers)
+  window: unstated
+  limit: 250
+  burst: null
+  observed_headers:
+    X-RateLimit-Limit: '250'
+    X-RateLimit-Remaining: '248'
+  observed_on: https://api.adgager.com/
+  observed_at: '2026-09-07'
+  evidence: >-
+    GET https://api.adgager.com/ returned HTTP 200 with x-ratelimit-limit: 250 and
+    x-ratelimit-remaining: 248 alongside {"status":"Hello, World!"}.
+  note: >-
+    The window is not signalled. Laravel's throttle middleware defaults to a per-minute window and
+    emits Retry-After plus X-RateLimit-Reset only once a caller is actually throttled, so "250 per
+    minute" is the likely shape - but the provider does not state it and it is NOT asserted here.
+response_headers:
+  observed:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  not_observed:
+  - X-RateLimit-Reset
+  - RateLimit
+  - RateLimit-Policy
+  - Retry-After
+  standard: none (X-RateLimit-* legacy form, not the IETF RateLimit header fields)
+exhaustion:
+  status_code: not observed (the probe stayed well inside the budget and did not exhaust it)
+  body: not observed
+graphql_endpoint_gap:
+  headers_present: false
+  detail: >-
+    The rate-limit headers appear on the endpoint ROOT but were absent from every observed
+    /graphql response on 2026-09-07. A GraphQL client - which is the only kind of client this API
+    has - therefore receives no runtime budget signal at all and cannot back off before being cut
+    off. This is the practical finding, and it is the sort of gap a provider can close cheaply.
+query_cost_controls:
+  depth_limit: not disclosed
+  complexity_limit: not disclosed
+  persisted_queries: >-
+    The server accepts a `queryId` parameter (named in its own missing-parameter error), which is
+    the webonyx/graphql-php persisted-query hook, but no persisted-query registry is published.

@@ -1,0 +1,176 @@
+generated: '2026-09-07'
+method: probed
+source: Direct HTTP probes of the named RFC 8615 well-known paths on every host in this record.
+note: Every named path missed on every host. www.adgager.com, adgager.com, api.adgager.com and blog.adgager.com
+  return 404. dash.adgager.com answers HTTP 200 with its 108KB single-page application shell for every
+  /.well-known/* path, including paths that cannot exist - that is an SPA catch-all, not a served document,
+  and it is recorded as a miss. No WellKnown, SecurityTxt or AgentCard pointer is emitted, because none
+  of these documents is served.
+summary:
+  hosts_probed: 5
+  paths_per_host: 9
+  documents_found: 0
+hosts:
+- host: www.adgager.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    content_type: text/html
+  - path: /.well-known/openid-configuration
+    status: 404
+    content_type: text/html
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    content_type: text/html
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    content_type: text/html
+  - path: /.well-known/api-catalog
+    status: 404
+    content_type: text/html
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/agent-card.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/agent.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/aauth-resource.json
+    status: 404
+    content_type: text/html
+- host: adgager.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    content_type: text/html
+  - path: /.well-known/openid-configuration
+    status: 404
+    content_type: text/html
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    content_type: text/html
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    content_type: text/html
+  - path: /.well-known/api-catalog
+    status: 404
+    content_type: text/html
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/agent-card.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/agent.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/aauth-resource.json
+    status: 404
+    content_type: text/html
+- host: api.adgager.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    content_type: text/html
+  - path: /.well-known/openid-configuration
+    status: 404
+    content_type: text/html
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    content_type: text/html
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    content_type: text/html
+  - path: /.well-known/api-catalog
+    status: 404
+    content_type: text/html
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/agent-card.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/agent.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/aauth-resource.json
+    status: 404
+    content_type: text/html
+- host: dash.adgager.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/html
+    note: HTTP 200 but the body is an HTML application shell, not a document; this host answers 200 for
+      every /.well-known/* path. Recorded as a miss.
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: text/html
+    note: HTTP 200 but the body is an HTML application shell, not a document; this host answers 200 for
+      every /.well-known/* path. Recorded as a miss.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: text/html
+    note: HTTP 200 but the body is an HTML application shell, not a document; this host answers 200 for
+      every /.well-known/* path. Recorded as a miss.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: text/html
+    note: HTTP 200 but the body is an HTML application shell, not a document; this host answers 200 for
+      every /.well-known/* path. Recorded as a miss.
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: text/html
+    note: HTTP 200 but the body is an HTML application shell, not a document; this host answers 200 for
+      every /.well-known/* path. Recorded as a miss.
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    content_type: text/html
+    note: HTTP 200 but the body is an HTML application shell, not a document; this host answers 200 for
+      every /.well-known/* path. Recorded as a miss.
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: text/html
+    note: HTTP 200 but the body is an HTML application shell, not a document; this host answers 200 for
+      every /.well-known/* path. Recorded as a miss.
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: text/html
+    note: HTTP 200 but the body is an HTML application shell, not a document; this host answers 200 for
+      every /.well-known/* path. Recorded as a miss.
+  - path: /.well-known/aauth-resource.json
+    status: 200
+    content_type: text/html
+    note: HTTP 200 but the body is an HTML application shell, not a document; this host answers 200 for
+      every /.well-known/* path. Recorded as a miss.
+- host: blog.adgager.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    content_type: text/html
+  - path: /.well-known/openid-configuration
+    status: 404
+    content_type: text/html
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    content_type: text/html
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    content_type: text/html
+  - path: /.well-known/api-catalog
+    status: 404
+    content_type: text/html
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/agent-card.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/agent.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/aauth-resource.json
+    status: 404
+    content_type: text/html

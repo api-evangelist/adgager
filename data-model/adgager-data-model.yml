@@ -1,0 +1,700 @@
+generated: '2026-09-07'
+method: derived
+source: graphql/adgager.graphql (live introspection of https://api.adgager.com/graphql, 2026-09-07)
+note: 'Entity graph derived mechanically from the GraphQL schema: every field whose base type is an OBJECT becomes
+  a relationship edge, cardinality read from LIST wrapping. Nothing is authored by hand. Paginator and *Response
+  wrapper types are excluded as transport shapes rather than entities. Adgager publishes no object reference, so
+  no id-prefix or domain vocabulary could be searched to enrich this.'
+api: adgager-graphql
+id_convention:
+  type: GraphQL ID (opaque string; observed values are numeric database ids such as "1".."249")
+  foreign_keys: Explicit *_id scalar fields sit alongside the resolved object field, e.g. Project.brand_id and Project.brand,
+    Project.target_filter_id and Project.targetFilter.
+  external_code: Plan carries an additional `code` field holding a ULID (e.g. 01HFC364EZV8REY4PSJCE39CRM).
+aggregates:
+- Adq
+- Brand
+- BrandCredit
+- Campaign
+- Comparison
+- Conversation
+- Event
+- GagTransaction
+- GagerQuestion
+- Gentry
+- Message
+- PaymentRequest
+- Plan
+- Project
+- ProjectCategory
+- ProjectGager
+- ProjectScore
+- QuestionGroup
+- SubscriptionModel
+- TargetFilter
+- TargetGroup
+- User
+entity_count: 83
+entities_with_relationships: 57
+entities:
+- entity: Adq
+  field_count: 8
+  id_fields:
+  - id
+  relationships:
+  - field: files
+    target: File
+    cardinality: has_many
+  - field: tags
+    target: Tag
+    cardinality: has_many
+- entity: AdqTag
+  field_count: 2
+  id_fields:
+  - adq_id
+  - tag_id
+  relationships: []
+- entity: BankInformation
+  field_count: 7
+  id_fields:
+  - id
+  - user_id
+  relationships: []
+- entity: Brand
+  field_count: 24
+  id_fields:
+  - id
+  - parent_brand_id
+  relationships:
+  - field: parentBrand
+    target: Brand
+    cardinality: has_one
+  - field: subBrands
+    target: Brand
+    cardinality: has_many
+  - field: siblingsOfBrand
+    target: Brand
+    cardinality: has_many
+  - field: country
+    target: Country
+    cardinality: has_one
+  - field: sector
+    target: Sector
+    cardinality: has_one
+  - field: brandCredit
+    target: BrandCredit
+    cardinality: has_many
+  - field: files
+    target: File
+    cardinality: has_many
+  - field: users
+    target: User
+    cardinality: has_many
+  - field: subscription
+    target: SubscriptionModel
+    cardinality: has_one
+  - field: projects
+    target: ProjectPaginator
+    cardinality: has_one
+- entity: BrandCredit
+  field_count: 7
+  id_fields:
+  - id
+  - brand_id
+  relationships:
+  - field: brand
+    target: Brand
+    cardinality: has_one
+- entity: BrandCreditTransaction
+  field_count: 6
+  id_fields:
+  - id
+  - brand_id
+  - targetable_id
+  relationships: []
+- entity: BrandDashboard
+  field_count: 6
+  id_fields: []
+  relationships:
+  - field: category
+    target: BrandCategory
+    cardinality: has_one
+  - field: subcategory
+    target: BrandCategory
+    cardinality: has_one
+- entity: BrandUser
+  field_count: 5
+  id_fields:
+  - id
+  relationships:
+  - field: brand
+    target: Brand
+    cardinality: has_one
+  - field: user
+    target: User
+    cardinality: has_one
+- entity: Campaign
+  field_count: 14
+  id_fields:
+  - id
+  relationships:
+  - field: files
+    target: File
+    cardinality: has_many
+- entity: CampaingUser
+  field_count: 3
+  id_fields:
+  - campaign_id
+  - coupon_id
+  - user_id
+  relationships: []
+- entity: Child
+  field_count: 4
+  id_fields:
+  - id
+  - user_id
+  relationships: []
+- entity: Comparison
+  field_count: 5
+  id_fields:
+  - id
+  relationships:
+  - field: projects
+    target: Project
+    cardinality: has_many
+- entity: Conversation
+  field_count: 4
+  id_fields:
+  - id
+  relationships:
+  - field: entries
+    target: ConversationEntry
+    cardinality: has_many
+  - field: latestEntry
+    target: ConversationEntry
+    cardinality: has_one
+- entity: ConversationEntry
+  field_count: 5
+  id_fields:
+  - id
+  - user_id
+  relationships:
+  - field: conservation
+    target: Conversation
+    cardinality: has_one
+  - field: user
+    target: User
+    cardinality: has_one
+- entity: Country
+  field_count: 7
+  id_fields:
+  - id
+  relationships:
+  - field: cities
+    target: City
+    cardinality: has_many
+  - field: universities
+    target: University
+    cardinality: has_many
+  - field: regions
+    target: Region
+    cardinality: has_many
+- entity: Coupon
+  field_count: 5
+  id_fields:
+  - id
+  - campaign_id
+  relationships:
+  - field: campaign
+    target: Campaign
+    cardinality: has_one
+- entity: District
+  field_count: 4
+  id_fields:
+  - id
+  - city_id
+  relationships: []
+- entity: Event
+  field_count: 13
+  id_fields:
+  - id
+  relationships:
+  - field: files
+    target: File
+    cardinality: has_many
+  - field: winners
+    target: EventWinner
+    cardinality: has_many
+- entity: EventUser
+  field_count: 5
+  id_fields:
+  - id
+  - user_id
+  - event_id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+- entity: Feedback
+  field_count: 7
+  id_fields:
+  - id
+  - user_id
+  relationships:
+  - field: files
+    target: File
+    cardinality: has_many
+  - field: user
+    target: User
+    cardinality: has_one
+- entity: GagTransaction
+  field_count: 8
+  id_fields:
+  - id
+  - user_id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+- entity: GagerInformation
+  field_count: 28
+  id_fields:
+  - id
+  - user_id
+  - country_id
+  - city_id
+  - district_id
+  - sector_id
+  - position_id
+  - birthplace_id
+  relationships:
+  - field: country
+    target: Country
+    cardinality: has_one
+  - field: city
+    target: City
+    cardinality: has_one
+- entity: GagerInvite
+  field_count: 7
+  id_fields:
+  - id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+  - field: invites
+    target: User
+    cardinality: has_many
+- entity: GagerInviteUser
+  field_count: 5
+  id_fields:
+  - id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+  - field: invited_user
+    target: User
+    cardinality: has_one
+  - field: gager_invite
+    target: GagerInvite
+    cardinality: has_one
+- entity: GagerQuestion
+  field_count: 6
+  id_fields:
+  - id
+  relationships:
+  - field: options
+    target: GagerQuestionOption
+    cardinality: has_many
+  - field: category
+    target: GagerQuestionCategory
+    cardinality: has_one
+- entity: GagerQuestionAnswer
+  field_count: 4
+  id_fields:
+  - id
+  - gager_question_option_id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+  - field: question
+    target: GagerQuestion
+    cardinality: has_one
+- entity: GagerQuestionCategory
+  field_count: 5
+  id_fields:
+  - id
+  relationships:
+  - field: questions
+    target: GagerQuestion
+    cardinality: has_many
+- entity: Gentry
+  field_count: 16
+  id_fields:
+  - id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+  - field: attachments
+    target: GentryAttachment
+    cardinality: has_one
+  - field: comments
+    target: GentryComment
+    cardinality: has_many
+  - field: hashtags
+    target: Hashtag
+    cardinality: has_many
+  - field: complaint
+    target: GentryComplaint
+    cardinality: has_many
+  - field: files
+    target: File
+    cardinality: has_many
+- entity: GentryBlock
+  field_count: 4
+  id_fields:
+  - id
+  - user_id
+  - gentry_id
+  - target_user_id
+  relationships: []
+- entity: GentryComment
+  field_count: 5
+  id_fields:
+  - id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+  - field: comments
+    target: GentryComment
+    cardinality: has_many
+- entity: GentryComplaint
+  field_count: 5
+  id_fields:
+  - id
+  relationships:
+  - field: gentry
+    target: Gentry
+    cardinality: has_one
+  - field: user
+    target: User
+    cardinality: has_one
+- entity: GentryDislike
+  field_count: 2
+  id_fields:
+  - id
+  relationships:
+  - field: gentry
+    target: Gentry
+    cardinality: has_one
+- entity: GentryLike
+  field_count: 2
+  id_fields:
+  - id
+  relationships:
+  - field: gentry
+    target: Gentry
+    cardinality: has_one
+- entity: GentryReward
+  field_count: 5
+  id_fields:
+  - gentry_id
+  - user_id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+- entity: GentryShare
+  field_count: 5
+  id_fields:
+  - user_id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+  - field: avatar
+    target: Avatar
+    cardinality: has_one
+- entity: GrandPrize
+  field_count: 13
+  id_fields:
+  - id
+  relationships:
+  - field: files
+    target: File
+    cardinality: has_many
+  - field: winners
+    target: GrandPrizeWinner
+    cardinality: has_many
+- entity: GrandPrizeUser
+  field_count: 5
+  id_fields:
+  - id
+  - user_id
+  - grand_prize_id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+- entity: InfoUpdate
+  field_count: 5
+  id_fields:
+  - id
+  - user_id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+- entity: Message
+  field_count: 7
+  id_fields:
+  - id
+  relationships:
+  - field: sender
+    target: User
+    cardinality: has_one
+  - field: recipient
+    target: User
+    cardinality: has_one
+- entity: Notification
+  field_count: 7
+  id_fields:
+  - id
+  - notifiable_id
+  relationships: []
+- entity: PaymentRequest
+  field_count: 10
+  id_fields:
+  - id
+  - user_id
+  - bank_information_id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+  - field: bankInformation
+    target: BankInformation
+    cardinality: has_one
+- entity: Profile
+  field_count: 13
+  id_fields:
+  - id
+  - avatar_id
+  relationships:
+  - field: avatar
+    target: Avatar
+    cardinality: has_one
+  - field: gentries
+    target: GentryPaginator
+    cardinality: has_one
+- entity: Project
+  field_count: 36
+  id_fields:
+  - id
+  - brand_id
+  - target_filter_id
+  - target_group_id
+  - question_group_id
+  relationships:
+  - field: brand
+    target: Brand
+    cardinality: has_one
+  - field: targetFilter
+    target: TargetFilter
+    cardinality: has_one
+  - field: negativeFilters
+    target: TargetFilter
+    cardinality: has_many
+  - field: targetGroup
+    target: TargetGroup
+    cardinality: has_one
+  - field: negativeGroups
+    target: TargetGroup
+    cardinality: has_many
+  - field: projectCategory
+    target: ProjectCategory
+    cardinality: has_one
+  - field: questionGroup
+    target: QuestionGroup
+    cardinality: has_one
+  - field: files
+    target: File
+    cardinality: has_many
+  - field: adq
+    target: Adq
+    cardinality: has_one
+  - field: projectGager
+    target: ProjectGager
+    cardinality: has_one
+  - field: projectScore
+    target: ProjectScore
+    cardinality: has_one
+  - field: projectScores
+    target: ProjectScore
+    cardinality: has_many
+- entity: ProjectCategory
+  field_count: 7
+  id_fields:
+  - id
+  - parent_category_id
+  relationships:
+  - field: parentCategory
+    target: ProjectCategory
+    cardinality: has_one
+  - field: projects
+    target: ProjectPaginator
+    cardinality: has_one
+- entity: ProjectGager
+  field_count: 10
+  id_fields:
+  - id
+  - user_id
+  relationships:
+  - field: project
+    target: Project
+    cardinality: has_one
+  - field: user
+    target: User
+    cardinality: has_one
+- entity: ProjectScore
+  field_count: 7
+  id_fields:
+  - id
+  - project_id
+  relationships: []
+- entity: QuestionGroup
+  field_count: 5
+  id_fields:
+  - id
+  relationships:
+  - field: brand
+    target: Brand
+    cardinality: has_one
+  - field: files
+    target: File
+    cardinality: has_many
+- entity: Section
+  field_count: 3
+  id_fields:
+  - id
+  - faculty_id
+  relationships: []
+- entity: SesForm
+  field_count: 6
+  id_fields:
+  - id
+  - user_id
+  relationships: []
+- entity: SubscriptionModel
+  field_count: 8
+  id_fields:
+  - id
+  relationships:
+  - field: brand
+    target: Brand
+    cardinality: has_one
+  - field: plan
+    target: Plan
+    cardinality: has_one
+  - field: transactions
+    target: Transaction
+    cardinality: has_many
+- entity: TargetFilter
+  field_count: 5
+  id_fields:
+  - id
+  relationships:
+  - field: brand
+    target: Brand
+    cardinality: has_one
+- entity: TargetGroup
+  field_count: 4
+  id_fields:
+  - id
+  relationships:
+  - field: brand
+    target: Brand
+    cardinality: has_one
+- entity: Transaction
+  field_count: 7
+  id_fields:
+  - id
+  - payment_id
+  - transaction_id
+  relationships:
+  - field: user
+    target: User
+    cardinality: has_one
+  - field: subscription
+    target: SubscriptionModel
+    cardinality: has_one
+- entity: University
+  field_count: 4
+  id_fields:
+  - id
+  - country_id
+  relationships:
+  - field: faculties
+    target: Faculty
+    cardinality: has_many
+- entity: UniversityUser
+  field_count: 6
+  id_fields:
+  - id
+  - user_id
+  - university_id
+  - faculty_id
+  - section_id
+  relationships:
+  - field: university
+    target: University
+    cardinality: has_one
+- entity: User
+  field_count: 37
+  id_fields:
+  - id
+  - avatar_id
+  relationships:
+  - field: brand
+    target: Brand
+    cardinality: has_one
+  - field: gagerInformation
+    target: GagerInformation
+    cardinality: has_one
+  - field: avatar
+    target: Avatar
+    cardinality: has_one
+  - field: universities
+    target: UniversityUser
+    cardinality: has_many
+  - field: notificationCount
+    target: NotificationCount
+    cardinality: has_one
+  - field: gagerTransaction
+    target: GagTransactionPaginator
+    cardinality: has_one
+  - field: following
+    target: UserPaginator
+    cardinality: has_one
+  - field: followedBy
+    target: UserPaginator
+    cardinality: has_one
+  - field: projects
+    target: ProjectGagerPaginator
+    cardinality: has_one
+  - field: gentries
+    target: GentryPaginator
+    cardinality: has_one
+  - field: blocking
+    target: UserPaginator
+    cardinality: has_one
+- entity: UserLastActivity
+  field_count: 2
+  id_fields:
+  - id
+  - user_id
+  relationships: []

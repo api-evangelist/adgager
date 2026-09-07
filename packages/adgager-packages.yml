@@ -1,0 +1,41 @@
+generated: '2026-09-07'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org, github.com/adgager, https://www.adgager.com/sitemap_index.xml,
+  https://www.adgager.com/llms.txt, https://dash.adgager.com/en/adq/llms.txt
+note: >-
+  No first-party client library exists in any public registry, and Adgager has no GitHub
+  organisation. Recorded as a measured zero. No `SDKs` pointer is emitted, because there is no SDK.
+package_count: 0
+official_package_count: 0
+packages: []
+registries_searched:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=adgager
+  status: 200
+  result: 0 packages
+  checked: '2026-09-07'
+- registry: pypi
+  query: https://pypi.org/pypi/adgager/json
+  status: 404
+  result: not found
+  checked: '2026-09-07'
+source_control:
+- host: github.com
+  url: https://github.com/adgager
+  status: 404
+  result: no organisation or user account of this name
+  checked: '2026-09-07'
+- host: api.github.com
+  url: https://api.github.com/orgs/adgager
+  status: 404
+  checked: '2026-09-07'
+docs_searched:
+  result: >-
+    No SDK, client-library, download or integration page exists in the 36-page sitemap, and neither
+    of the provider's llms.txt documents mentions a library, a package or a code sample.
+consumption_path:
+  detail: >-
+    A consumer of the Adgager GraphQL API has to hand-write a client against the schema. Since the
+    endpoint is fully introspectable, generic GraphQL codegen (graphql-codegen, gql, strawberry,
+    Apollo) will produce a typed client from graphql/adgager.graphql without any vendor package.

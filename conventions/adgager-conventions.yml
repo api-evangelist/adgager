@@ -1,0 +1,216 @@
+generated: '2026-09-07'
+method: derived
+source: graphql/adgager.graphql (live introspection of https://api.adgager.com/graphql, 2026-09-07)
+note: >-
+  Adgager publishes no developer documentation, so every convention below is derived from the live
+  schema and from responses observed against the public endpoint. Nothing here is taken from a docs
+  page, because there is no docs page.
+api: adgager-graphql
+
+auth:
+  style: bearer
+  header: 'Authorization: Bearer <token>'
+  guard: laravel-sanctum
+  anonymous_surface: reference data only (countries, cities, districts, regions, plans, languages, sectors, positions, universities, faculties)
+  see: authentication/adgager-authentication.yml
+
+transport:
+  protocol: GraphQL over HTTP
+  endpoint: https://api.adgager.com/graphql
+  methods: POST (a GET with no query returns a GraphQL error, not a schema)
+  content_type: application/json
+  cors: "access-control-allow-origin: * observed on the endpoint root"
+  file_upload: >-
+    graphql-multipart-request-spec (jaydenseric). The schema declares `scalar Upload` with that
+    specification named in its own description, and uploadFile / uploadAvatar / createProjectImage /
+    createBrandImage / testFile mutations consume it.
+
+pagination:
+  style: offset-page (Laravel Lighthouse @paginate)
+  request_params:
+  - name: first
+    type: Int!
+    meaning: page size; required on every paginated field
+  - name: page
+    type: Int
+    meaning: 1-based page number
+  response_envelope: '<Type>Paginator { paginatorInfo, data }'
+  response_fields:
+  - count
+  - currentPage
+  - firstItem
+  - hasMorePages
+  - lastItem
+  - lastPage
+  - perPage
+  - total
+  cursor_pagination: false
+  note: >-
+    28 paginator types exist (ProjectPaginator, UserPaginator, BrandPaginator, GentryPaginator,
+    MessagePaginator, PaymentRequestPaginator and so on). Non-paginated list fields also exist
+    (gagers, countries, cities) and return a bare list with no envelope and no limit argument.
+
+filtering:
+  style: Lighthouse where-conditions plus hand-written filter inputs
+  where_conditions: >-
+    Generated *WhereWhereConditions inputs with column/operator/value/AND/OR/HAS, e.g.
+    QueryGetProjectsWhereWhereConditions.
+  ordering: '*OrderByOrderByClause inputs, {column, order: ASC|DESC}'
+  bespoke_filters:
+  - AdQProjectFilter
+  - BrandFilter
+  - UserFilter
+  - GagerFilter
+  - MyProjectInput
+
+field_selection:
+  mechanism: GraphQL selection sets - the client names exactly the fields it wants
+  sparse_fieldsets: native to GraphQL; no separate expand/fields parameter exists
+  n_plus_one_relations: >-
+    Relations are traversable inline (Brand.subBrands, Brand.projects, Project.questionGroup,
+    Project.targetGroup, User.brandUsers), so there is no "expand" convention to document.
+
+errors:
+  envelope: >-
+    Standard GraphQL - HTTP 200 with a top-level `errors[]` array carrying message, locations, path
+    and extensions. There is no RFC 9457 problem+json surface anywhere on this API.
+  http_status_on_error: 200 (application errors are carried in the body, not the status line)
+  extensions_observed:
+  - guards (names the failing Laravel auth guard, e.g. ["sanctum"])
+  - file
+  - line
+  - trace
+  observation: >-
+    The public endpoint returns framework debug detail inside `extensions` - absolute server paths
+    under /var/www/vhosts/adgager.com/api.adgager.com/vendor/, source line numbers, and a 41-frame
+    stack trace - on both authentication and request-shape errors. This is recorded as observed
+    runtime behaviour of the public endpoint on 2026-09-07, not as a security assessment.
+  see: errors/adgager-problem-types.yml
+
+request_id_tracing:
+  supported: false
+  evidence: >-
+    No X-Request-Id, X-Correlation-Id, traceparent or equivalent header was returned on any probed
+    response (endpoint root, GraphQL POST, 404). Errors carry no correlation identifier either, so a
+    caller has no token to quote back to support.
+
+versioning:
+  scheme: none
+  evidence: >-
+    A single unversioned endpoint at /graphql. No version path segment, no version header, no
+    @deprecated directive used anywhere in the schema (0 of 1,100+ fields are marked deprecated).
+  see: lifecycle/adgager-lifecycle.yml
+
+rate_limit_signaling:
+  headers_observed:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  where: >-
+    Returned on https://api.adgager.com/ (the endpoint root). The /graphql responses observed on
+    2026-09-07 did NOT carry them, so a GraphQL client gets no runtime budget signal.
+  retry_after: not observed
+  see: rate-limits/adgager-rate-limits.yml
+
+idempotency:
+  supported: false
+  coverage: none
+  header: null
+  scope: []
+  retention: null
+  evidence: >-
+    No Idempotency-Key header, no client-supplied request key argument, and no deduplication
+    token appears anywhere in the 414-type schema. The mutating surface is 141 mutations, including
+    money-moving ones (gentryRewardPayment, initSubscriptionWithPayment, createGagerPaymentRequest,
+    spendBrandCredit, createGagTranscation) and none of them accepts a caller-supplied idempotency
+    key. Several mutations are upsert-shaped (upsertProject, upsertBrand, upsertBrandUser,
+    upsertQuestionGroup, upsertTargetFilter, upsertGagerQuestion, upsertEvent, upsertComparison,
+    upsertGrandPrize, upsertAdq): passing an existing id makes those naturally replay-safe, but that
+    is a consequence of the id argument, not a documented replay-protection mechanism, and it does
+    not cover the create-only or payment mutations.
+  note: >-
+    A retried mutation whose response was lost cannot be safely re-sent. This is the single
+    highest-value gap for agent use of this API.
+
+reversibility:
+  overall: documented
+  grade_basis: >-
+    Reversal operations exist and are named in the schema, but no window is stated anywhere - there
+    is no documentation to state one in. Per the pipeline rule, a reversal path with no stated
+    window grades `documented`, not `verified`.
+  write_surface_mutations: 141
+  surfaces:
+  - surface: subscription
+    forward: initSubscriptionWithPayment / initSubscriptionWithoutPayment
+    reversal: cancelSubscription
+    reversal_signature: 'cancelSubscription(confirmed: Boolean!): SubscriptionModel'
+    window: null
+    window_source: null
+    grade: documented
+    note: >-
+      SubscriptionModel carries canceled_at, start_date and end_date, so cancellation is a state
+      change rather than a delete. The `confirmed: Boolean!` argument is a two-step confirmation
+      gate, which is the closest thing this API has to a dry-run.
+  - surface: research project
+    forward: upsertProject / confirmProject / updateProjectStatus
+    reversal: closeProject, deleteProject
+    reversal_signature: 'closeProject(id: ID!, status: String!): Project!  |  deleteProject(id: ID!): Project'
+    window: null
+    window_source: null
+    grade: documented
+    note: >-
+      deleteProject returns the deleted Project rather than a boolean, but nothing in the schema
+      indicates whether the row is soft-deleted or whether a restore path exists. No restore
+      mutation is present.
+  - surface: community post (Gentry)
+    forward: createGentry, createGentryComment, createGentryLike, createGentryDislike, pinGentry
+    reversal: deleteGentry, deleteGentryComment, deleteGentryLike, deleteGentryDislike, deleteGentryComplaint
+    window: null
+    window_source: null
+    grade: documented
+    note: Every social write has a matching delete. Symmetric, undocumented.
+  - surface: user account
+    forward: register, createManager, createBrandUser, blockUser, toggleUserStatus
+    reversal: unblockUser, removeBrandUser, toggleUserStatus (deactivated_at is nullable, so it toggles back), deleteSelf
+    window: null
+    window_source: null
+    grade: documented
+    note: >-
+      toggleUserStatus(id, deactivated_at) takes a nullable timestamp, so deactivation is reversible
+      by passing null. deleteSelf has no counterpart and appears terminal.
+  - surface: payment request / wallet
+    forward: createGagerPaymentRequest, createGagTranscation, gentryRewardPayment, spendBrandCredit
+    reversal: deniedPaymentRequests, pendentPaymentRequests (an approval state machine, not a refund)
+    window: null
+    window_source: null
+    grade: documented
+    note: >-
+      There is no refund, void or reverse mutation. Payment requests move through
+      confirPaymentRequests / paymentSuccessRequests / deniedPaymentRequests / pendentPaymentRequests
+      states, which is reversible only before settlement. A settled GAG transaction has no reversal
+      path in the schema. NO WINDOW IS STATED ANYWHERE and none is asserted here.
+  - surface: stored credit card
+    forward: saveCreditCard, setDefaultCreditCard
+    reversal: deleteCreditCard
+    window: null
+    grade: documented
+  no_reversal:
+  - createGagTranscation (GAG token ledger entry - no reverse/void mutation exists)
+  - gentryRewardPayment (community reward payout - no reverse mutation exists)
+  - deleteSelf (account deletion - no restore mutation exists)
+  - mergeTargetGroups (destructive merge - no split or unmerge mutation exists)
+  - ConfirmAllProjectAnswers (bulk confirmation - no bulk unconfirm exists)
+
+dry_run_mode:
+  supported: partial
+  evidence: >-
+    No general dry-run/preview/simulate flag. Two narrow rehearsal surfaces exist: projectCost and
+    projectTotal / projectGagerCount let a caller price and size a project before creating it, and
+    cancelSubscription(confirmed:) and checkBigPrizeStatus / checkAuth / checkTcknVni / gagerCandidateCheck
+    are check-before-act queries. Coverage is a handful of flows out of 141 mutations.
+
+cross_links:
+  authentication: authentication/adgager-authentication.yml
+  errors: errors/adgager-problem-types.yml
+  lifecycle: lifecycle/adgager-lifecycle.yml
+  rate_limits: rate-limits/adgager-rate-limits.yml
+  data_model: data-model/adgager-data-model.yml

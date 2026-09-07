@@ -64,5 +64,26 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Adgager is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://equityzen.com/company/adgager
+Adgager is an Istanbul-based market research platform founded in 2016 with support from Istanbul
+Technical University (ITU). It runs end-to-end research studies for brands over a verified member
+community ("Gagers"), and its AdQ product scores advertising effectiveness across traditional and
+digital channels, benchmarking a brand against category, competitor and market averages.
+
+## API surface
+
+Adgager publishes **no developer portal, no API documentation and no SDK**. It does operate a
+single first-party **GraphQL API** at `https://api.adgager.com/graphql` (Laravel Lighthouse, Laravel
+Sanctum bearer auth) which backs the `dash.adgager.com` client dashboard. Introspection is open and
+unauthenticated, so the contract in `graphql/adgager.graphql` was rendered from the provider's own
+introspection response — 414 types, 118 queries, 141 mutations.
+
+- **Contract**: `graphql/adgager.graphql` (+ the raw introspection JSON)
+- **Provider-published `llms.txt`**: five are served (www EN + TR, dash root, dash AdQ EN + TR);
+  three are saved verbatim under `llms/`
+- **Plans**: read machine-to-machine from the anonymous `plans` query, alongside the AdQ page ladder
+- **Not found** (measured, not skipped): no OpenAPI, no AsyncAPI, no MCP server, no A2A agent card,
+  no `/.well-known/*` document on any host, no status page, no changelog, no security.txt, no
+  GitHub organisation, no package in any registry.
+
+Hosts probed: `www.adgager.com`, `adgager.com`, `api.adgager.com`, `dash.adgager.com`,
+`blog.adgager.com`. Enrichment pass: 2026-09-07.

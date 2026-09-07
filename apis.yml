@@ -1,18 +1,73 @@
 aid: adgager
 name: Adgager
-description: 'Adgager is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Adgager is an Istanbul-based market research platform founded in 2016 with support from Istanbul
+  Technical University (ITU). It runs end-to-end research studies for brands over a verified member
+  community ("Gagers"), combining survey, mobile-community (ADTEAMS), neuroscience and ethnographic
+  methods with an AI-assisted analysis stack. Its AdQ product scores advertising effectiveness across
+  traditional and digital channels and benchmarks a brand against category, competitor and market
+  averages. Clients run projects, target groups, question groups and reports through the dashboard at
+  dash.adgager.com, which is backed by a single first-party GraphQL API at api.adgager.com/graphql
+  (Laravel Lighthouse, Sanctum bearer auth). Adgager reports serving 200+ brands including L'Oreal,
+  Nestle, Bioderma, ING Bank, Reckitt Benckiser and Oriflame.
 url: https://raw.githubusercontent.com/api-evangelist/adgager/refs/heads/main/apis.yml
+image: https://www.adgager.com/wp-content/uploads/2023/09/adgager-logo-1.png
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-07'
 modified: '2026-09-07'
 tags:
 - Company
-apis: []
+- Market Research
+- Consumer Insights
+- Survey
+- Advertising
+- Advertising Effectiveness
+- Brand Measurement
+- Panel
+- GraphQL
+- Turkey
+apis:
+- aid: adgager-graphql
+  name: Adgager GraphQL API
+  description: >-
+    The single first-party API behind the Adgager platform and the dash.adgager.com client dashboard.
+    A Laravel Lighthouse GraphQL endpoint exposing 118 queries and 141 mutations over the platform's
+    core domain - brands and sub-brands, research projects, question groups, target filters and target
+    groups, project answers and scores, the AdQ advertising-effectiveness score and comparisons, the
+    Gager member community (registration, invites, Gentry social feed, wallet and GAG token
+    transactions, payment requests), subscriptions and plans, campaigns, events and reference data.
+    Introspection is open and unauthenticated; reference-data queries (countries, cities, plans,
+    languages, sectors, universities) answer anonymously, while everything account-scoped is behind
+    the Laravel Sanctum bearer guard.
+  humanURL: https://dash.adgager.com/
+  baseURL: https://api.adgager.com/graphql
+  image: https://www.adgager.com/wp-content/uploads/2023/09/adgager-logo-1.png
+  tags:
+  - GraphQL
+  - Market Research
+  - Consumer Insights
+  - Advertising Effectiveness
+  properties:
+  - type: GraphQL
+    url: graphql/adgager.graphql
+  - type: X-GraphQLIntrospection
+    url: graphql/adgager-introspection.json
+  - type: Authentication
+    url: authentication/adgager-authentication.yml
+  - type: Conventions
+    url: conventions/adgager-conventions.yml
+  - type: ErrorCatalog
+    url: errors/adgager-problem-types.yml
+  - type: DataModel
+    url: data-model/adgager-data-model.yml
+  - type: RateLimits
+    url: rate-limits/adgager-rate-limits.yml
+  - type: Conformance
+    url: conformance/adgager-conformance.yml
+  - type: X-MCPServerCandidate
+    url: mcp/adgager-mcp.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +75,35 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://equityzen.com/company/adgager
+  url: https://www.adgager.com/
+- type: Login
+  url: https://dash.adgager.com/login
+- type: Pricing
+  url: https://dash.adgager.com/en/adq
+- type: TermsOfService
+  url: https://www.adgager.com/en/terms-of-use/
+- type: PrivacyPolicy
+  url: https://www.adgager.com/en/privacy-policy/
+- type: Support
+  url: https://www.adgager.com/en/contact/
+- type: Blog
+  url: https://blog.adgager.com/
+- type: BlogRSS
+  url: https://blog.adgager.com/feed/
+- type: LLMsTxt
+  url: llms/adgager-llms.txt
+- type: Plans
+  url: plans/adgager-plans-pricing.yml
+- type: Lifecycle
+  url: lifecycle/adgager-lifecycle.yml
+- type: DomainSecurity
+  url: security/adgager-domain-security.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Packages
+  url: packages/adgager-packages.yml
+x-enrichment:
+  date: '2026-09-07'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v3

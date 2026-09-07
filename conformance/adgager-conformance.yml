@@ -1,0 +1,141 @@
+generated: '2026-09-07'
+method: derived
+source: >-
+  graphql/adgager.graphql, https://api.adgager.com/graphql (live probes),
+  security/adgager-domain-security.yml, https://www.adgager.com/robots.txt
+note: >-
+  Adgager makes no published compliance or standards claim anywhere on its public surface - no
+  trust centre, no certifications page, no security page. Every entry below is asserted from the
+  contract or from an observed response, never from a marketing claim. No `Compliance` pointer is
+  emitted, because no certification is published.
+api: adgager-graphql
+conformance:
+- id: graphql-over-http
+  conforms: true
+  evidence: >-
+    POST application/json with a `query` member to https://api.adgager.com/graphql returns a
+    spec-shaped {data, errors} envelope; HTTP 200 is used for application errors. Observed 2026-09-07.
+- id: graphql-introspection
+  conforms: true
+  evidence: >-
+    The full October 2021 introspection query returns a complete __schema (414 types) to an
+    anonymous caller. Observed 2026-09-07.
+- id: graphql-multipart-request-spec
+  conforms: true
+  evidence: >-
+    `scalar Upload` in the schema names https://github.com/jaydenseric/graphql-multipart-request-spec
+    in its own description; uploadFile, uploadAvatar, createProjectImage and createBrandImage consume it.
+- id: graphql-deprecation-directive
+  conforms: false
+  evidence: >-
+    @deprecated is available and used on zero of the schema's fields and enum values, so the schema
+    carries no in-band evolution signal.
+- id: relay-cursor-connections
+  conforms: false
+  evidence: >-
+    Pagination is Laravel Lighthouse offset paging (first/page + PaginatorInfo), not Relay
+    connections - there is no edges/node/pageInfo/cursor shape anywhere in the schema.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No oauth2 flow. Authentication is a Laravel Sanctum bearer token; /.well-known/oauth-authorization-server
+    404s on every host.
+- id: oidc
+  conforms: false
+  evidence: '/.well-known/openid-configuration 404s on every host (see well-known/adgager-well-known.yml).'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'No application/problem+json surface; errors use the GraphQL errors[] envelope.'
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: '/.well-known/security.txt returns 404 on www, apex, api and blog hosts.'
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header observed on any probed response.
+- id: ietf-ratelimit-headers
+  conforms: false
+  evidence: >-
+    Legacy X-RateLimit-Limit / X-RateLimit-Remaining are emitted on the API root, not the IETF
+    RateLimit / RateLimit-Policy fields, and neither form appears on /graphql responses.
+- id: idempotency-key
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header and no client-supplied request key on any of the 141 mutations.
+    See conventions/adgager-conventions.yml.
+- id: hsts
+  conforms: partial
+  evidence: >-
+    dash.adgager.com sends Strict-Transport-Security max-age=31536000; www.adgager.com and
+    api.adgager.com do not. Probed 2026-09-07.
+- id: tls-1-3
+  conforms: true
+  evidence: All three hosts negotiate TLSv1.3 (security/adgager-domain-security.yml).
+- id: dnssec
+  conforms: false
+  evidence: No DNSKEY on adgager.com.
+- id: spf
+  conforms: true
+  evidence: SPF record present on adgager.com.
+- id: dmarc
+  conforms: partial
+  evidence: DMARC record present with p=none, i.e. published but not enforcing.
+- id: content-signal
+  conforms: true
+  evidence: >-
+    https://www.adgager.com/robots.txt carries a Content-Signal directive
+    (search=yes, ai-input=yes, ai-train=yes) and an explicit allow list for 40+ named AI crawlers.
+    A deliberate, machine-readable agent-access posture and unusual for a company this size.
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    Four llms.txt documents are served: https://www.adgager.com/llms.txt (EN),
+    https://www.adgager.com/llms-tr.txt, https://dash.adgager.com/adq/llms.txt and
+    https://dash.adgager.com/en/adq/llms.txt - all HTTP 200, text/markdown, in llms.txt format.
+domain_standard:
+  market: market research / consumer insights / advertising effectiveness measurement
+  standards_checked:
+  - id: esomar
+    body: ESOMAR / ICC-ESOMAR International Code
+    declared_in_contract: false
+    evidence: >-
+      No ESOMAR reference in the schema, in either llms.txt, or on any indexed page. Membership is
+      an organisational claim rather than a contract signature, and none is published.
+  - id: triple-s
+    body: Triple-S (survey data interchange XML)
+    declared_in_contract: false
+    evidence: >-
+      No Triple-S export surface. Survey definitions are carried in a bespoke `SurveyJsScalar`
+      (SurveyJS JSON), and answers in a bespoke JSONScalar, neither of which is an interchange standard.
+  - id: ddi
+    body: DDI (Data Documentation Initiative)
+    declared_in_contract: false
+    evidence: No DDI codebook or metadata surface in the schema.
+  - id: openrtb
+    body: IAB OpenRTB
+    declared_in_contract: false
+    evidence: >-
+      Checked because AdQ is an advertising product, but Adgager measures ad effectiveness rather
+      than transacting inventory - no bid request, imp, seatbid or auction shape exists in the schema.
+  - id: vast
+    body: IAB VAST
+    declared_in_contract: false
+    evidence: No ad-serving or video-ad-delivery surface; ad films are uploaded assets, not VAST tags.
+  conclusion: >-
+    Adgager's market has candidate standards (Triple-S, DDI for survey data interchange) and the
+    contract signs none of them. Survey definitions and answers move as vendor-specific JSON
+    scalars, so a buyer already speaking a survey-data standard needs a bespoke connector. This is
+    recorded as a finding, not a penalty - the reward-only rule applies.
+regulatory:
+  jurisdiction: Türkiye
+  regimes_named_by_provider:
+  - name: KVKK (Turkish Personal Data Protection Law No. 6698)
+    evidence: >-
+      The site publishes an "Aydınlatma Metni" (KVKK illumination/disclosure text) at
+      https://www.adgager.com/aydinlatma-metni/ and https://www.adgager.com/en/illumination-text/,
+      which is the KVKK-mandated data-subject notice. HTTP 200, 2026-09-07.
+    certification: none published
+  certifications_published: []
+  note: >-
+    The platform holds identity-grade personal data - the schema exposes checkTcknVni, which
+    validates a Turkish national identity number (TCKN) or tax number (VKN), plus BankInformation
+    and demographic SES data - and publishes no SOC 2, ISO 27001 or equivalent attestation.
