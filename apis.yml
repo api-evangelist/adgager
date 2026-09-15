@@ -1,15 +1,14 @@
 aid: adgager
 name: Adgager
-description: >-
-  Adgager is an Istanbul-based market research platform founded in 2016 with support from Istanbul
-  Technical University (ITU). It runs end-to-end research studies for brands over a verified member
-  community ("Gagers"), combining survey, mobile-community (ADTEAMS), neuroscience and ethnographic
-  methods with an AI-assisted analysis stack. Its AdQ product scores advertising effectiveness across
-  traditional and digital channels and benchmarks a brand against category, competitor and market
-  averages. Clients run projects, target groups, question groups and reports through the dashboard at
-  dash.adgager.com, which is backed by a single first-party GraphQL API at api.adgager.com/graphql
-  (Laravel Lighthouse, Sanctum bearer auth). Adgager reports serving 200+ brands including L'Oreal,
-  Nestle, Bioderma, ING Bank, Reckitt Benckiser and Oriflame.
+description: Adgager is an Istanbul-based market research platform founded in 2016 with support from Istanbul
+  Technical University (ITU). It runs end-to-end research studies for brands over a verified member community
+  ("Gagers"), combining survey, mobile-community (ADTEAMS), neuroscience and ethnographic methods with
+  an AI-assisted analysis stack. Its AdQ product scores advertising effectiveness across traditional and
+  digital channels and benchmarks a brand against category, competitor and market averages. Clients run
+  projects, target groups, question groups and reports through the dashboard at dash.adgager.com, which
+  is backed by a single first-party GraphQL API at api.adgager.com/graphql (Laravel Lighthouse, Sanctum
+  bearer auth). Adgager reports serving 200+ brands including L'Oreal, Nestle, Bioderma, ING Bank, Reckitt
+  Benckiser and Oriflame.
 url: https://raw.githubusercontent.com/api-evangelist/adgager/refs/heads/main/apis.yml
 image: https://www.adgager.com/wp-content/uploads/2023/09/adgager-logo-1.png
 x-type: company
@@ -29,18 +28,16 @@ tags:
 - GraphQL
 - Turkey
 apis:
-- aid: adgager-graphql
+- aid: adgager:adgager-graphql
   name: Adgager GraphQL API
-  description: >-
-    The single first-party API behind the Adgager platform and the dash.adgager.com client dashboard.
-    A Laravel Lighthouse GraphQL endpoint exposing 118 queries and 141 mutations over the platform's
+  description: The single first-party API behind the Adgager platform and the dash.adgager.com client
+    dashboard. A Laravel Lighthouse GraphQL endpoint exposing 118 queries and 141 mutations over the platform's
     core domain - brands and sub-brands, research projects, question groups, target filters and target
-    groups, project answers and scores, the AdQ advertising-effectiveness score and comparisons, the
-    Gager member community (registration, invites, Gentry social feed, wallet and GAG token
-    transactions, payment requests), subscriptions and plans, campaigns, events and reference data.
-    Introspection is open and unauthenticated; reference-data queries (countries, cities, plans,
-    languages, sectors, universities) answer anonymously, while everything account-scoped is behind
-    the Laravel Sanctum bearer guard.
+    groups, project answers and scores, the AdQ advertising-effectiveness score and comparisons, the Gager
+    member community (registration, invites, Gentry social feed, wallet and GAG token transactions, payment
+    requests), subscriptions and plans, campaigns, events and reference data. Introspection is open and
+    unauthenticated; reference-data queries (countries, cities, plans, languages, sectors, universities)
+    answer anonymously, while everything account-scoped is behind the Laravel Sanctum bearer guard.
   humanURL: https://dash.adgager.com/
   baseURL: https://api.adgager.com/graphql
   image: https://www.adgager.com/wp-content/uploads/2023/09/adgager-logo-1.png
