@@ -82,6 +82,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: RateLimits
+  url: rate-limits/adgager-rate-limits.yml
 - type: Website
   url: https://www.adgager.com/
 - type: Login
