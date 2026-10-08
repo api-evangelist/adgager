@@ -170,3 +170,58 @@ purchase_flow:
     The WordPress storefront on www.adgager.com exposes an iyzico/v1 REST namespace, and the
     GraphQL schema carries saveCreditCard, setDefaultCreditCard, initSubscriptionWithPayment and a
     Transaction type.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - one-time
+  units: []
+  plans:
+  - name: Marka
+    access: paid
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Ana Marka
+    access: paid
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Alt Kategori
+    access: paid
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Ana Kategori
+    access: paid
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: All in One
+    access: paid
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Marka Raporu
+    access: other
+    model: one-time
+    model_how: stated
+    units: []
+    periods: []
+  - name: Kategori Raporu
+    access: other
+    model: one-time
+    model_how: stated
+    units: []
+    periods: []
+  - name: Türkiye Geneli Raporu
+    access: other
+    model: one-time
+    model_how: stated
+    units: []
+    periods: []
