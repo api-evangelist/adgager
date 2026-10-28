@@ -64,26 +64,107 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Adgager is an Istanbul-based market research platform founded in 2016 with support from Istanbul
-Technical University (ITU). It runs end-to-end research studies for brands over a verified member
-community ("Gagers"), and its AdQ product scores advertising effectiveness across traditional and
-digital channels, benchmarking a brand against category, competitor and market averages.
+Adgager is an Istanbul-based market research platform founded in 2016 with support from Istanbul Technical University (ITU). It runs end-to-end research studies for brands over a verified member community ("Gagers"), combining survey, mobile-community (ADTEAMS), neuroscience and ethnographic methods with an AI-assisted analysis stack. Its AdQ product scores advertising effectiveness across traditional and digital channels and benchmarks a brand against category, competitor and market averages. Clients run projects, target groups, question groups and reports through the dashboard at dash.adgager.com, which is backed by a single first-party GraphQL API at api.adgager.com/graphql (Laravel Lighthouse, Sanctum bearer auth). Adgager reports serving 200+ brands including L'Oreal, Nestle, Bioderma, ING Bank, Reckitt Benckiser and Oriflame.
 
-## API surface
+**Areas:** Company · Market Research · Consumer Insights · Surveys · Advertising · Advertising Effectiveness · Brand Measurement · Panel · GraphQL · Turkey
 
-Adgager publishes **no developer portal, no API documentation and no SDK**. It does operate a
-single first-party **GraphQL API** at `https://api.adgager.com/graphql` (Laravel Lighthouse, Laravel
-Sanctum bearer auth) which backs the `dash.adgager.com` client dashboard. Introspection is open and
-unauthenticated, so the contract in `graphql/adgager.graphql` was rendered from the provider's own
-introspection response — 414 types, 118 queries, 141 mutations.
+## Adgager on APIs.io
 
-- **Contract**: `graphql/adgager.graphql` (+ the raw introspection JSON)
-- **Provider-published `llms.txt`**: five are served (www EN + TR, dash root, dash AdQ EN + TR);
-  three are saved verbatim under `llms/`
-- **Plans**: read machine-to-machine from the anonymous `plans` query, alongside the AdQ page ladder
-- **Not found** (measured, not skipped): no OpenAPI, no AsyncAPI, no MCP server, no A2A agent card,
-  no `/.well-known/*` document on any host, no status page, no changelog, no security.txt, no
-  GitHub organisation, no package in any registry.
+Everything profiled for Adgager is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/adgager/](https://apis.io/providers/adgager/)** — or go straight to one of the APIs or properties below.
 
-Hosts probed: `www.adgager.com`, `adgager.com`, `api.adgager.com`, `dash.adgager.com`,
-`blog.adgager.com`. Enrichment pass: 2026-09-07.
+### APIs (1)
+
+- [Adgager GraphQL API](https://apis.io/apis/adgager/adgager-graphql/) — The single first-party API behind the Adgager platform and the dash.adgager.com client dashboard. A Laravel Lighthouse GraphQL endpoint exposing 118 queries…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [adgager-mcp.yml](https://apis.io/servers/adgager/adgager-mcp-yml/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Adgager Authentication](https://apis.io/security/adgager/adgager-authentication/)
+- [Adgager Domain Security](https://apis.io/security/adgager/adgager-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Adgager Plans Pricing](https://apis.io/plans/adgager/adgager-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Adgager Rate Limits](https://apis.io/rate-limits/adgager/adgager-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.adgager.com/)
+- [Pricing](https://dash.adgager.com/en/adq)
+- [Support](https://www.adgager.com/en/contact/)
+- [Blog](https://blog.adgager.com/)
+- [Terms of service](https://www.adgager.com/en/terms-of-use/)
+- [Privacy policy](https://www.adgager.com/en/privacy-policy/)
+
+## API Evangelist rating
+
+**Kin Score 38.9** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 35.1 |
+| Contract governance | 4.5 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 20.8 |
+| Access clarity | 69.7 |
+
+**Agent readiness 21.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/adgager/](https://apis.io/providers/adgager/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Adgager: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/adgager/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
